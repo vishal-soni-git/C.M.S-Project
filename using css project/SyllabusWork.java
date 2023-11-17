@@ -1,0 +1,330 @@
+import javafx.application.*;
+import javafx.stage.*;
+import javafx.scene.*;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.layout.HBox.*;
+import javafx.scene.text.*;
+import javafx.collections.*;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.event.*;
+import javafx.event.ActionEvent;
+import javafx.scene.paint.*;
+import java.io.*;
+import java.sql.*;
+public class SyllabusWork extends Application
+{
+	 MysqlCon mc=new MysqlCon();
+	    Connection con=null;
+	Button b1,b2,b3,b4,b5;
+	public void start(Stage stage) throws Exception
+	{
+
+		Font font = Font.font("Vardana" , FontWeight.BOLD , 18);
+
+		GridPane gp = new GridPane();
+		gp.setMinSize(600,600);
+		gp.setHgap(90);
+		gp.setVgap(30);
+		gp.setPadding(new Insets(60,30,10,80));
+		
+		//main Heading
+		Text text=new Text("MCA Integrated Syllabus");
+		text.setFont(Font.font("Vardana" , FontWeight.BOLD, FontPosture.ITALIC, 25));
+		text.setFill(Color.RED);
+		text.setUnderline(true);
+
+		Text t = new Text("MCA Integrated 1st Year");
+		t.setX(50);
+		t.setY(50);
+		t.setFont(Font.font("Vardana" , FontWeight.BOLD, FontPosture.ITALIC, 23));
+		t.setFill(Color.BLUE);
+
+		Label label=new Label();
+		label.setFont(font);
+		b1 = new Button("Download");
+		
+		b1.setFont(font);
+		b1.setStyle("-fx-border-color:black;-fx-background-color:pink;");
+		
+		gp.addRow(0,t,b1);
+		//---------------------------------------
+		Text t2 = new Text("MCA Integrated 2nd Year");
+		t2.setX(50);
+		t2.setY(50);
+		t2.setFont(Font.font("Vardana" , FontWeight.BOLD, FontPosture.ITALIC, 23));
+		t2.setFill(Color.BLUE);
+
+		b2 = new Button("Download");
+		b2.setFont(font);
+		b2.setStyle("-fx-border-color:black;-fx-background-color:pink;");
+		
+		gp.addRow(1,t2,b2);
+		//---------------------------------------
+		Text t3 = new Text("MCA Integrated 3rd Year");
+		t3.setX(50);
+		t3.setY(50);
+		t3.setFont(Font.font("Vardana" , FontWeight.BOLD, FontPosture.ITALIC, 23));
+		t3.setFill(Color.BLUE);
+	
+		b3 = new Button("Download");
+		b3.setFont(font);
+		b3.setStyle("-fx-border-color:black;-fx-background-color:pink;");
+
+		gp.addRow(2,t3,b3);		
+		//---------------------------------------------------
+		Text t4 = new Text("MCA Integrated 4th Year");
+		t4.setX(50);
+		t4.setY(50);
+		t4.setFont(Font.font("Vardana" , FontWeight.BOLD, FontPosture.ITALIC, 23));
+		t4.setFill(Color.BLUE);
+				
+		b4 = new Button("Download");
+		b4.setFont(font);
+		b4.setStyle("-fx-border-color:black;-fx-background-color:pink;");
+	
+		gp.addRow(3,t4,b4);
+
+		//--------------------------------------------------
+		Text t5 = new Text("MCA Integrated 5th Year");
+		t5.setX(50);
+		t5.setY(50);
+		t5.setFont(Font.font("Vardana" , FontWeight.BOLD, FontPosture.ITALIC, 23));
+		t5.setFill(Color.BLUE);
+
+		b5 = new Button("Download");
+		b5.setFont(font);
+		b5.setStyle("-fx-border-color:black;-fx-background-color:pink;");
+		
+		gp.addRow(4,t5,b5);
+		gp.addRow(5,label);
+	
+		b1.setOnAction(e->{
+						try{
+						con = mc.getMyCon();
+						PreparedStatement pstmt =con.prepareStatement("select * from Syllabus where sid=101");
+						ResultSet rs =pstmt.executeQuery();
+						if(rs.next())
+						{
+							InputStream is = rs.getBinaryStream("SPDF");
+							File file =new File("E:\\pdf");
+                             if(file.exists())//exist() to know file is exist or not
+		                       {
+		 	                      System.out.println(file+"\nbhai ye folder hai");
+		                        }
+		                    else
+		                        {
+			                       file.mkdir();//to ctreate new folder
+			                       System.out.println(file+"\nbhai ye folder create kr diya h");
+		                        }
+								File file1=new File(file,"1stYear.pdf");	
+		                         if(file1.isFile())//isFile() to check file is exist or not
+		                            {
+			                              System.out.println(file1+"\nbhai ye file hai");
+		                              }	
+		                        else
+		                                {
+			                              file1.createNewFile();//to create new File
+			                              System.out.println(file1+"\nbhai ye file create kr di hai");
+		                                  }
+							FileOutputStream fos = new FileOutputStream(file1);
+							int bytesRead=-1;
+							byte[] buffer = new byte[4096];
+							while((bytesRead=is.read(buffer))!=-1){
+							fos.write(buffer,0,bytesRead);
+						}
+						label.setText("1st year Syl. Downloaded successfully. \nIn"+file1);
+						//System.out.println("A file was retrieved from the database....");
+						}
+					}catch(Exception e1){
+						e1.printStackTrace();
+					}
+					});
+		//-----------------------------------------------------------
+		b2.setOnAction(e->{
+						try{
+						con = mc.getMyCon();
+						PreparedStatement pstmt =con.prepareStatement("select * from Syllabus where sid=102");
+						ResultSet rs =pstmt.executeQuery();
+						if(rs.next())
+						{
+							InputStream is = rs.getBinaryStream("SPDF");
+							File file =new File("E:\\pdf");
+                             if(file.exists())//exist() to know file is exist or not
+		                       {
+		 	                      System.out.println(file+"\nbhai ye folder hai");					  
+		                        }
+		                    else
+		                        {
+			                       file.mkdir();//to ctreate new folder
+			                       System.out.println(file+"\nbhai ye folder create kr diya h");
+		                        }
+								File file1=new File(file,"2stYear.pdf");	
+		                         if(file1.isFile())//isFile() to check file is exist or not
+		                            {
+			                              System.out.println(file1+"\nbhai ye file hai");
+		                              }	
+		                        else
+		                                {
+			                              file1.createNewFile();//to create new File
+			                              System.out.println(file1+"\nbhai ye file create kr di hai");
+		                                  }
+							FileOutputStream fos = new FileOutputStream(file1);
+							int bytesRead=-1;
+							byte[] buffer = new byte[4096];
+							while((bytesRead=is.read(buffer))!=-1){
+							fos.write(buffer,0,bytesRead);
+						}
+						label.setText("2nd year Syl.Downloaded successfully.\nIn"+file1);
+						//System.out.println("A file was retrieved from the database....");
+						}
+
+					}catch(Exception e12){
+						e12.printStackTrace();
+					}
+					});
+		//-----------------------------------------------------------
+		b3.setOnAction(e->{
+						try{
+						con = mc.getMyCon();
+						PreparedStatement pstmt =con.prepareStatement("select * from Syllabus where sid=103");
+						ResultSet rs =pstmt.executeQuery();
+						if(rs.next())
+						{
+							InputStream is = rs.getBinaryStream("SPDF");
+							File file =new File("E:\\pdf");
+                             if(file.exists())//exist() to know file is exist or not
+		                       {
+		 	                      System.out.println(file+"\nbhai ye folder hai");					  
+		                        }
+		                    else
+		                        {
+			                       file.mkdir();//to ctreate new folder
+			                       System.out.println(file+"\nbhai ye folder create kr diya h");
+		                        }
+								File file1=new File(file,"3stYear.pdf");	
+		                         if(file1.isFile())//isFile() to check file is exist or not
+		                            {
+			                              System.out.println(file1+"\nbhai ye file hai");
+		                              }	
+		                        else
+		                                {
+			                              file1.createNewFile();//to create new File
+			                              System.out.println(file1+"\nbhai ye file create kr di hai");
+		                                  }
+							FileOutputStream fos = new FileOutputStream(file1);
+							int bytesRead=-1;
+							byte[] buffer = new byte[4096];
+							while((bytesRead=is.read(buffer))!=-1){
+							fos.write(buffer,0,bytesRead);
+						}
+						label.setText("3rd year Syl.Downloaded successfully.\nIn"+file1);
+						//System.out.println("A file was retrieved from the database....");
+						}
+					
+					}catch(Exception e13){
+						e13.printStackTrace();
+					}
+					});
+		//-------------------------------------------------------------
+		b4.setOnAction(e->{
+						try{
+						con = mc.getMyCon();
+						PreparedStatement pstmt =con.prepareStatement("select * from Syllabus where sid=104");
+						ResultSet rs =pstmt.executeQuery();
+						if(rs.next())
+						{
+							InputStream is = rs.getBinaryStream("SPDF");
+							File file =new File("E:\\pdf");
+                             if(file.exists())//exist() to know file is exist or not
+		                       {
+		 	                      System.out.println(file+"\nbhai ye folder hai");					  
+		                        }
+		                    else
+		                        {
+			                       file.mkdir();//to ctreate new folder
+			                       System.out.println(file+"\nbhai ye folder create kr diya h");
+		                        }
+								File file1=new File(file,"4stYear.pdf");	
+		                         if(file1.isFile())//isFile() to check file is exist or not
+		                            {
+			                              System.out.println(file1+"\nbhai ye file hai");
+		                              }	
+		                        else
+		                                {
+			                              file1.createNewFile();//to create new File
+			                              System.out.println(file1+"\nbhai ye file create kr di hai");
+		                                  }
+							FileOutputStream fos = new FileOutputStream(file1);
+							int bytesRead=-1;
+							byte[] buffer = new byte[4096];
+							while((bytesRead=is.read(buffer))!=-1){
+							fos.write(buffer,0,bytesRead);
+						}
+						label.setText("4th year Syl. Downloaded successfully.\nIn"+file1);
+						//System.out.println("A file was retrieved from the database....");
+						}
+					}catch(Exception e14){
+						e14.printStackTrace();
+					}
+					});
+		//--------------------------------------------------------------
+		b5.setOnAction(e->{
+						try{
+						con = mc.getMyCon();
+						PreparedStatement pstmt =con.prepareStatement("select * from Syllabus where sid=105");
+						ResultSet rs =pstmt.executeQuery();
+						if(rs.next())
+						{
+							InputStream is = rs.getBinaryStream("SPDF");
+							File file =new File("E:\\pdf");
+                             if(file.exists())//exist() to know file is exist or not
+		                       {
+		 	                      System.out.println(file+"\nbhai ye folder hai");					  
+		                        }
+		                    else
+		                        {
+			                       file.mkdir();//to ctreate new folder
+			                       System.out.println(file+"\nbhai ye folder create kr diya h");
+		                        }
+								File file1=new File(file,"5stYear.pdf");	
+		                         if(file1.isFile())//isFile() to check file is exist or not
+		                            {
+			                              System.out.println(file1+"\nbhai ye file hai");
+		                              }	
+		                        else
+		                                {
+			                              file1.createNewFile();//to create new File
+			                              System.out.println(file1+"\nbhai ye file create kr di hai");
+		                                  }
+							FileOutputStream fos = new FileOutputStream(file1);
+							int bytesRead=-1;
+							byte[] buffer = new byte[4096];
+							while((bytesRead=is.read(buffer))!=-1){
+							fos.write(buffer,0,bytesRead);
+						}
+						label.setText("5th year Syl.Downloaded successfully.\nIn"+file1);
+						//System.out.println("A file was retrieved from the database....");
+						}
+					}catch(Exception e15){
+						e15.printStackTrace();
+					}
+					});
+		VBox vb = new VBox();
+		//vb.setStyle("-fx-background-color:Beige;");
+		vb.setStyle( "-fx-background-color:  linear-gradient(WHITE, BEIGE); -fx-border-color: white;-fx-border-radius: 20;-fx-padding: 10 10 10 10;-fx-background-radius: 20;");
+		vb.getChildren().addAll(text,gp);
+		vb.setSpacing(5);
+		vb.setPadding(new Insets(5,5,5,5));
+		
+		Scene sc = new  Scene(vb,700,600);
+		stage.setScene(sc);
+		stage.show();
+
+	}
+	public static void main(String [] args)
+	{
+		launch(args);
+	}
+}

@@ -1,0 +1,48 @@
+#vbox {
+
+ -fx-background-color:  linear-gradient(Violet,blue);
+   -fx-border-color: white;
+   -fx-border-radius: 20;
+   -fx-padding: 10 10 10 10;
+   -fx-background-radius: 20;  
+}
+#hbox {
+
+ -fx-background-color:  linear-gradient(Violet,blue);
+   -fx-border-color: blue;
+   -fx-border-radius: 20;
+   -fx-padding: 3px 10px 3px 10px;
+   -fx-background-radius: 20;  
+}
+#TeacherData
+{
+    -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(White,yellow);
+}
+#StudentData
+{
+     -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(White,pink);
+}
+#Syllabus
+{
+     -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(White,skyblue);
+}
+#CourseFee
+{
+  -fx-background-radius: 30, 30, 29, 28;
+  -fx-padding: 3px 10px 3px 10px;
+  -fx-background-color: linear-gradient(White,rgb(42, 87, 104));
+}
+#AboutCollege
+{
+      -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(White,pink);
+}
+
+ 

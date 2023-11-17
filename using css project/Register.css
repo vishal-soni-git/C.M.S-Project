@@ -1,0 +1,50 @@
+  #vbox {
+    -fx-background-color:  linear-gradient(#a234eb,#a234eb);
+   -fx-border-color: white;
+   -fx-border-radius: 20;
+   -fx-padding: 10 10 10 10;
+   -fx-background-radius: 20;
+}
+#vbox1 {
+    -fx-background-color:  linear-gradient(#a234eb,blue);
+   -fx-border-color: white;
+   -fx-border-radius: 50;
+   -fx-padding: 5 10 10 10;
+   -fx-background-radius: 50;
+}
+
+  #gridPane {
+    -fx-background-color:  linear-gradient(blue, Violet);
+   -fx-border-color: white;
+   -fx-border-radius: 20;
+   -fx-padding: 10 10 10 10;
+   -fx-background-radius: 20;
+}
+
+#selectPhoto{
+   -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(Violet,blue );
+}
+
+
+ #register {
+    -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 2px 5px 2px 5px;
+    -fx-background-color: linear-gradient(Violet,cyan );
+}
+
+#reset {
+    -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(Violet, cyan );
+}
+ 
+#login {
+ -fx-background-radius: 30, 30, 29, 28;
+    -fx-padding: 3px 10px 3px 10px;
+    -fx-background-color: linear-gradient(black, cyan );
+}
+#text {
+ -fx-fill:  linear-gradient(white,cyan );
+}
