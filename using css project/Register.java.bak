@@ -16,7 +16,6 @@ import javafx.scene.text.Text;
 import javafx.geometry.Insets;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
-import javafx.geometry.Pos;
 import javafx.stage.Stage;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.RadioButton;
@@ -44,6 +43,8 @@ public class Register extends Application {
 	ImageView iv,selectView;
 	File file = null;
 	Label labelImage = new Label();
+	String otpNum=null;
+	boolean otpValid;
 
 	public void start(Stage stage) throws Exception {
 
@@ -115,10 +116,13 @@ public class Register extends Application {
 		Button register = new Button("Register");
 		Button reset = new Button("Reset");
 		Button login = new Button("Click here Back to Login");
+		Button otp =new Button("Verify");
 		selectPhoto.setEffect(dropShadow);
 		register.setEffect(dropShadow);
 		reset.setEffect(dropShadow);
 		login.setEffect(dropShadow);
+		otp.setEffect(dropShadow);
+		otp.setPrefSize(70, 18);
 		register.setPrefSize(100, 20);
 		reset.setPrefSize(100, 20);
 		login.setPrefSize(200, 20);
@@ -129,7 +133,7 @@ public class Register extends Application {
 		gridPane.setAlignment(Pos.CENTER);
 
 		gridPane.addRow(1, l1, t1);
-		gridPane.addRow(2, l2, t2);
+		gridPane.addRow(2, l2, t2,otp);
 		gridPane.addRow(3, l3, t3);
 		gridPane.addRow(4, l4, t4);
 		gridPane.addRow(5, l5, t5);
@@ -141,6 +145,21 @@ public class Register extends Application {
 		gridPane.setHgap(15);
 		gridPane.setVgap(10);
 
+
+      //panel for otp buttom
+		GridPane otpPanel = new GridPane();
+		otpPanel.setAlignment(Pos.CENTER);
+
+		Label otpL1=new Label("Email        :");
+		Label otpL2=new Label();
+		Label otpL3=new Label("Enter OTP :");
+		TextField otpText=new TextField();
+		Button confirmBtn=new Button("Confirm");
+
+		otpPanel.addRow(1,otpL1,otpL2);
+		otpPanel.addRow(2,otpL3,otpText);
+		otpPanel.addRow(3,confirmBtn);
+
 		HBox hb1 = new HBox();
 		hb1.setAlignment(Pos.CENTER);
 
@@ -150,6 +169,8 @@ public class Register extends Application {
 		HBox hb3 = new HBox();// for text and logo
 		hb1.setSpacing(40);
 		hb3.setSpacing(200);
+
+	
 
 		hb1.setPadding(new Insets(30, 5, 5, 5));
 		hb2.setPadding(new Insets(30, 5, 5, 5));
@@ -179,6 +200,50 @@ public class Register extends Application {
 		gridPane.setId("gridPane");
 		vb2.setId("vbox");
 		vb1.setId("vbox1");
+
+
+      //for otp panel
+		Stage stage1=new Stage();
+
+		//otp verification button
+		otp.setOnAction(e -> {
+
+			otpL2.setText(t2.getText());
+
+			
+			GenerateOtp o=new GenerateOtp();
+		    otpNum= new String(o.otpGenerator(6));
+			System.out.println(otpNum);
+
+			String message = "Your OTP for C.M.S is : "+otpNum;
+           String subject = "OTP Validation";
+           String to =t2.getText();
+           String from = "cinestar569@gmail.com";
+		    Mail.sendEmail(message, subject, to, from);
+
+			Scene sc1 = new Scene(otpPanel, 300, 400);
+	    	stage1.setScene(sc1);
+	    	stage1.show();    			
+		});   
+
+		//otp confirm button
+         
+		 confirmBtn.setOnAction(e -> {
+            if(otpNum.equals(otpText.getText()))
+			 {
+				otpValid=true;
+				otp.setText("Varified");
+				stage1.close();
+			 }
+			 else
+			 {
+				otpValid=false;
+                 Label mm=new Label("Please enter valid otp");
+				 otpPanel.addRow(4,mm);
+			 }
+		});   
+		
+
 
 		// select photo button
 		selectPhoto.setOnAction(e -> {
@@ -239,6 +304,7 @@ public class Register extends Application {
 					} // if end
 					else {
 
+
 						String query = "insert into collegedb.logindata values(?,?,?,?,?,?,?)";
 						PreparedStatement ps1 = con.prepareStatement(query);
 
@@ -291,7 +357,19 @@ public class Register extends Application {
 						}
 
 						// execute all 7 statement
+						if(otpValid==true)//otp verification
+						{
 						int result = ps1.executeUpdate();
+						}
+						else
+						{
+							Alert otpAlert = new Alert(AlertType.INFORMATION);
+							otpAlert.setTitle("Message");
+							otpAlert.setHeaderText("Message:");
+							otpAlert.setContentText("Please Verify email first");
+							otpAlert.showAndWait();
+							System.out.println("Please Verify email first");
+						}
 
 						if (result == 0) {
 							Alert al5 = new Alert(AlertType.INFORMATION);
